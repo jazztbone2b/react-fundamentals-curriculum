@@ -3,6 +3,7 @@ let ReactRouter = require('react-router-dom');
 let Router = ReactRouter.BrowserRouter;
 let Route = ReactRouter.Route;
 let Switch = ReactRouter.Switch;
+let DailyWeather = require('./DailyWeather');
 
 let Main = require('./Main');
 let Header = require('./Header');
@@ -25,6 +26,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={Main} />
             <Route exact path='/forecast' component={Forecast} />
+            <Route path='/details' component={DailyWeather} />
           </Switch>
         </div>
       </Router>

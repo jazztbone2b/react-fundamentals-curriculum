@@ -15,7 +15,6 @@ let id = 'aecb73a0b30e35880f559fbd53ea9fc6';
 function getWeather(value) {
   return axios.get('http://api.openweathermap.org/data/2.5/forecast/daily?q=' + value + '&type=accurate&APPID=' + id + '&cnt=5')
     .then(function(weather) {
-      console.log(weather.data);
       return weather.data;
     })
 }

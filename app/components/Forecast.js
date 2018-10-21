@@ -2,11 +2,17 @@ let React = require('react');
 var queryString = require('query-string');
 let getWeather = require('../utils/api');
 let Loading = require('./Loading');
+let kelvinToFahrenheit = require('kelvin-to-fahrenheit');
+let PropTypes = require('prop-types');
 
 const FiveDay = (props) => {
   return (
     <h2 className='five-day-h2'>5 Day Forecast for {props.city}</h2>
   )
+}
+
+FiveDay.propTypes = {
+  city: PropTypes.string.isRequired
 }
 
 const ErrorPage = (props) => {
@@ -23,32 +29,38 @@ class Forecast extends React.Component {
       city: '',
       data: null,
       loading: true,
+      oneDay: false,
       error: null
     }
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
     let cityQuery = queryString.parse(this.props.location.search);
-    console.log(cityQuery);
     let city = cityQuery.city;
-
-    console.log(city);
     
     getWeather(city)
       .then((data) => {
-        console.log(data);
         let weatherData = [];
 
         data.list.filter((weather) => {
           return weather;
         }).filter((list) => {
-          console.log(list.dt)
+          let lowTemp = parseInt(kelvinToFahrenheit(list.temp.min));
+          let highTemp = parseInt(kelvinToFahrenheit(list.temp.max));
+          let humidity = list.humidity;
           let timestamp = new Date(list.dt * 1000).toString().slice(0, 10);
+
           return list.weather.filter((res) => {
             weatherData.push({
               weatherIcons: res.icon,
               weatherMain: res.main,
-              forecastDate: timestamp
+              forecastDate: timestamp,
+              description: res.description,
+              humidity: humidity,
+              low: lowTemp,
+              high: highTemp
             })
           })
         })
@@ -60,7 +72,6 @@ class Forecast extends React.Component {
         }
       });
     }).catch((err) => {
-      console.log('heyyyyyyyyy ' + err);
       this.setState(() => {
         return {
           error: 'looks like there is an error...'
@@ -69,7 +80,16 @@ class Forecast extends React.Component {
       
     })
   }
-
+  handleClick(index, event) {
+    this.props.history.push({
+      pathname: '/details/' + this.state.city,
+      state: {
+        data: this.state.data[index],
+        oneDay: true,
+        name: this.state.city
+      }
+    })
+  }
   render() {
     let loading = this.state.loading;
     let weatherDataFiveDay = this.state.data;
@@ -84,30 +104,26 @@ class Forecast extends React.Component {
     }
 
     if(weatherDataFiveDay !== null){
-      console.log(weatherDataFiveDay);
-      
       return (
         <div className='weather-container'>
         <FiveDay city={this.state.city} />
-        
           <div className='weather'>
           {weatherDataFiveDay.map((item, index) => {
             return (
-            <div>
-              <li>
-                <img 
-                  alt='weather icon' 
-                  src={'../app/images/weather-icons/' + item.weatherIcons + '.svg'}
-                  key={index + 1}
-                />
-              </li>
-              <li>
-                {item.forecastDate}
-              </li>
-              <li>
-                {item.weatherMain}
-              </li>
-            </div>
+              <div key={index} onClick={this.handleClick.bind(this, index)}>
+                <li>
+                  <img 
+                    alt='weather icon' 
+                    src={'../app/images/weather-icons/' + item.weatherIcons + '.svg'}
+                  />
+                </li>
+                <li>
+                  {item.forecastDate}
+                </li>
+                <li>
+                  {item.weatherMain}
+                </li>
+              </div>
           )})
         }</div>
       </div>

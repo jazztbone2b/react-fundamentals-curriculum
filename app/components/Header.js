@@ -1,6 +1,6 @@
 let React = require('react');
 let GetLocation = require('./GetLocation');
-var NavLink = require('react-router-dom').NavLink;
+var Link = require('react-router-dom').NavLink;
 
 let styles = {
   content: {
@@ -18,12 +18,12 @@ class Header extends React.Component {
   render() {
     return (
       <nav className='navbar'>
-      <NavLink to={{
+      <Link to={{
         pathname: '/'
       }}
       >
         <h2>{this.props.header}</h2>
-      </NavLink>
+      </Link>
         <GetLocation
           style={styles.content}
           buttonStyle={styles.button}

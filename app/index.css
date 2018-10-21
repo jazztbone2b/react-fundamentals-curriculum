@@ -72,12 +72,25 @@ li {
   text-align: center;
 }
 
+.weather-container > ul > li {
+  margin-bottom: 10px;
+}
+
+.weather-container > ul {
+  padding: 0;
+}
+
+.weather > ul > li {
+  margin-bottom: 10px;
+}
+
 .weather > div {
   margin: 30px;
 }
 
 .weather > div > li {
   margin: 10px;
+  color: white;
 }
 
 .weather {
@@ -90,4 +103,10 @@ li {
 img {
   width: 120px;
   height: 120px;
+}
+
+.daily-img {
+  width: 160px;
+  height: 160px;
+  margin-top: 40px;
 }

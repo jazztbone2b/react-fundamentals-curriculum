@@ -1,8 +1,5 @@
 let React = require('react');
-let PropTypes = require('prop-types');
-let getWeather = require('../utils/api');
-var NavLink = require('react-router-dom').NavLink;
-let Forecast = require('./Forecast')
+var Link = require('react-router-dom').NavLink;
 
 class GetLocation extends React.Component {
   constructor(props) {
@@ -26,8 +23,6 @@ class GetLocation extends React.Component {
         city: value,
       }
     })
-
-    console.log(value);
   }
   handleSubmit() {
     this.setState(() => {
@@ -50,7 +45,7 @@ class GetLocation extends React.Component {
           value={this.state.city}
           onChange={this.handleChange}
         />
-        <NavLink to={{
+        <Link to={{
           pathname: '/forecast',
           search: '?city=' + currentCity
         }}
@@ -64,7 +59,7 @@ class GetLocation extends React.Component {
           >
           Get Weather
           </button>
-        </NavLink>
+        </Link>
       </form>
     )
   }
