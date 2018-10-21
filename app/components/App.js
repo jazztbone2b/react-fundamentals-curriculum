@@ -4,6 +4,7 @@ let Router = ReactRouter.BrowserRouter;
 let Route = ReactRouter.Route;
 let Switch = ReactRouter.Switch;
 let DailyWeather = require('./DailyWeather');
+require.context('../images', true, /\.svg$/);
 
 let Main = require('./Main');
 let Header = require('./Header');

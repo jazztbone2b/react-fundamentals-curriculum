@@ -114,7 +114,7 @@ class Forecast extends React.Component {
                 <li>
                   <img 
                     alt='weather icon' 
-                    src={'../app/images/weather-icons/' + item.weatherIcons + '.svg'}
+                    src={'app/images/weather-icons/' + item.weatherIcons + '.svg'}
                   />
                 </li>
                 <li>
