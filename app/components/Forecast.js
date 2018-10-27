@@ -17,7 +17,7 @@ FiveDay.propTypes = {
 
 const ErrorPage = (props) => {
   return (
-    <h2 className='five-day-h2'>Looks like that isn't a city... Try again.</h2>
+    <h2 className='five-day-h2'>Looks like that is not a city... Try again.</h2>
   )
 }
 
